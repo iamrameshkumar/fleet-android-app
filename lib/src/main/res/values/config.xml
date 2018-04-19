@@ -9,7 +9,7 @@
     <!--  MAP CONFIG -->
     <string name="mapbox_access_token_dummy">pk.mapox-token-dummy</string>
     <string name="tilehosting_base_url">https://maps.tilehosting.com</string>
-    <string name="tilehosting_access_token"></string>
+    <string name="tilehosting_access_token">LLRxrAW8qh4LHSzTw6qo</string>
 
     <!--  FLEET -->
     <string name="default_fleet_url_default">https://mobile.fleet.mapotempo.com</string>
@@ -18,5 +18,5 @@
 
     <!-- SENTRY -->
     <!-- "https://publicKey:secretKey@host:port/1?options" -->
-    <string name="sentry_config"></string>
+    <string name="sentry_config">https://fc4d07dc48ed450b93350b96c92c0998:4cf9a5b6184f4dd8adb4e267d2637264@sentry.mapotempo.com/19?buffer.enabled=true</string>
 </resources>
