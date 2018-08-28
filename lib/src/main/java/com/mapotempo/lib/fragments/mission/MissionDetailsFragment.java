@@ -26,7 +26,9 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.ColorStateList;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
@@ -38,6 +40,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetBehavior;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +57,7 @@ import com.mapotempo.fleet.dao.model.MissionAction;
 import com.mapotempo.fleet.dao.model.MissionActionType;
 import com.mapotempo.fleet.dao.model.MissionStatusType;
 import com.mapotempo.fleet.dao.model.submodel.Address;
+import com.mapotempo.fleet.dao.model.submodel.Quantity;
 import com.mapotempo.fleet.dao.model.submodel.TimeWindow;
 import com.mapotempo.fleet.manager.MapotempoFleetManager;
 import com.mapotempo.lib.MapotempoApplicationInterface;
@@ -116,6 +120,9 @@ public class MissionDetailsFragment extends MapotempoBaseFragment
     private FloatingActionButton mStatusSecondAction;
     private FloatingActionButton mStatusThirdAction;
     private FloatingActionButton mStatusMoreAction;
+
+    private LinearLayout mLayoutQuantities;
+    private LinearLayout mLayoutQuantitiesContainer;
 
     private BottomSheetBehavior mBottomSheetBehavior;
 
@@ -257,6 +264,10 @@ public class MissionDetailsFragment extends MapotempoBaseFragment
             }
         });
 
+        // Quantities view
+        mLayoutQuantities = view.findViewById(R.id.quantities_layout);
+        mLayoutQuantitiesContainer = view.findViewById(R.id.quantities_container);
+
         return view;
     }
 
@@ -302,7 +313,6 @@ public class MissionDetailsFragment extends MapotempoBaseFragment
                 case BottomSheetBehavior.STATE_EXPANDED:
                     break;
                 }
-
             }
 
             @Override
@@ -496,6 +506,40 @@ public class MissionDetailsFragment extends MapotempoBaseFragment
             String date = String.format("%s - %s", DateHelpers.parse(tw.getStart(), DateHelpers.DateStyle.HOURMINUTES), DateHelpers.parse(tw.getEnd(), DateHelpers.DateStyle.HOURMINUTES));
             textView.setText(date);
             mLayoutTimeWindowsContainer.addView(textView);
+        }
+
+        if (mMission.getQuantities().isEmpty()) {
+            mLayoutQuantities.setVisibility(View.GONE);
+        }
+
+        for (Quantity quantity : mMission.getQuantities()) {
+            if (!quantity.isValid()) { continue; }
+
+            View quantityLayout = getLayoutInflater().inflate(R.layout.quantity_layout, null);
+
+            TextView icon = quantityLayout.findViewById(R.id.quantity_icon);
+            TextView label = quantityLayout.findViewById(R.id.quantity_label);
+            TextView number = quantityLayout.findViewById(R.id.quantity_number);
+
+            // PREPARE ICONS WITH FONT AWESOME LIBRARY
+            String iconName = quantity.getUnitIcon().replace("-", "_icon_");
+            String fontIcon;
+
+            try {
+                fontIcon = getString(getResources().getIdentifier(iconName, "string", getActivity().getPackageName()));
+            } catch (Resources.NotFoundException e) {
+                Log.e("Ressource Not Found", e.getMessage());
+                fontIcon = getString(R.string.fa_icon_archive);
+            }
+
+            icon.setText(fontIcon);
+            icon.setTypeface(Typeface.createFromAsset(getContext().getAssets(), "fonts/fontawesome-webfont.ttf"));
+
+            // SET LABEL AND VALUE
+            label.setText(quantity.getLabel());
+            number.setText(String.valueOf(quantity.getQuantity()));
+
+            mLayoutQuantitiesContainer.addView(quantityLayout);
         }
     }
 

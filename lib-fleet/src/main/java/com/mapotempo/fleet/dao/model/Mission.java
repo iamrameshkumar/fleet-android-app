@@ -30,6 +30,7 @@ import com.mapotempo.fleet.dao.access.MissionActionAccess;
 import com.mapotempo.fleet.dao.access.MissionStatusTypeAccess;
 import com.mapotempo.fleet.dao.model.submodel.Address;
 import com.mapotempo.fleet.dao.model.submodel.Location;
+import com.mapotempo.fleet.dao.model.submodel.Quantity;
 import com.mapotempo.fleet.dao.model.submodel.TimeWindow;
 import com.mapotempo.fleet.utils.DateUtils;
 import com.mapotempo.fleet.utils.ModelUtils;
@@ -52,6 +53,7 @@ public class Mission extends ModelBase
     public static final String ETA = "eta";
     public static final String LOCATION = "location";
     public static final String ADDRESS = "address";
+    public static final String QUANTITIES = "quantities";
     // public static final String SYNC_USER = "sync_user";
     public static final String MISSION_STATUS_TYPE_ID = "mission_status_type_id";
     public static final String REFERENCE = "reference";
@@ -157,6 +159,24 @@ public class Mission extends ModelBase
             return res;
         } catch (FleetException e)
         {
+            return null;
+        }
+    }
+
+    public List<Quantity> getQuantities()
+    {
+        try {
+            MutableArray quantities = mDocument.getArray(QUANTITIES);
+            List<Quantity> quantityList = new ArrayList<>();
+
+            if (quantities == null) return quantityList;
+
+            for (int i = 0; i < quantities.count(); i++) {
+                quantityList.add(new Quantity(mDatabaseHandler, quantities.getDictionary(i)));
+            }
+
+            return quantityList;
+        } catch (FleetException e) {
             return null;
         }
     }

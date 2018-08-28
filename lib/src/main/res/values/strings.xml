@@ -60,6 +60,7 @@
   <string name="planned">"Planned: "</string>
   <string name="visit_duration">"Visit duration: "</string>
   <string name="time_windows">"Time Windows"</string>
+  <string name="quantities">"Quantities"</string>
   <string name="directions">"directions"</string>
 
   <!-- Settings -->

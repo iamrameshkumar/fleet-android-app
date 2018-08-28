@@ -369,4 +369,56 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/quantities_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingRight="@dimen/fragment_mission_body_element_padding"
+        android:paddingTop="@dimen/fragment_mission_body_element_padding"
+        android:paddingBottom="@dimen/fragment_mission_body_element_padding"
+        android:weightSum="5"
+        android:background="@drawable/bg_mission_detail_item">
+
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_timelapse_black_24dp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="4"
+            android:weightSum="4"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/fragment_mission_body_detail_size"
+                android:text="@string/quantities"
+                tools:text="@string/quantities" />
+
+            <LinearLayout
+                android:id="@+id/quantities_container"
+                android:layout_width="0dp"
+                android:layout_weight="2"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <!-- include quantities layout here -->
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
 </LinearLayout>

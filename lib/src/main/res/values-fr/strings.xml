@@ -59,6 +59,7 @@
   <string name="planned">"Planifié : "</string>
   <string name="visit_duration">"Durée de la visite : "</string>
   <string name="time_windows">"Plage horaire"</string>
+  <string name="quantities">"Unité livrables"</string>
   <string name="directions">"itinéraire"</string>
 
   <!-- Settings -->
